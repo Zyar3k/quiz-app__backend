@@ -1,17 +1,18 @@
 import express from "express";
 import morgan from "morgan";
+import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
+import { config } from "dotenv";
 import router from "./router/route.js";
 import connect from "./database/conn.js";
 
 const app = express();
-
+mongoose.set("strictQuery", true);
 // middleware
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
-dotenv.config();
+config();
 
 // app port
 const port = process.env.PORT || 8080;
