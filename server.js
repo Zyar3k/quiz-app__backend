@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./router/route.js";
+import connect from "./database/conn.js";
 
 const app = express();
 
@@ -26,6 +27,16 @@ app.get("/", (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server connected to http://localhost:${port}`);
-});
+connect()
+  .then(() => {
+    try {
+      app.listen(port, () => {
+        console.log(`Server connected to http://localhost:${port}`);
+      });
+    } catch (error) {
+      console.log("Cannot connect to the server");
+    }
+  })
+  .catch((error) => {
+    console.log("Invalid DB connection");
+  });
