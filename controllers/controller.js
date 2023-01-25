@@ -1,5 +1,5 @@
 import Questions from "../models/questionSchema.js";
-import Result from "../models/resultSchema.js";
+import Results from "../models/resultSchema.js";
 import questions, { answers } from "../database/data.js";
 
 // get all questions
@@ -41,15 +41,37 @@ export async function dropQuestions(req, res) {
 
 // get all results
 export async function getResult(req, res) {
-  res.json("result api get request");
+  try {
+    const r = await Results.find();
+    res.json(r);
+  } catch (error) {
+    res.json({ error });
+  }
 }
 
 // post all results
 export async function storeResult(req, res) {
-  res.json("result api post request");
+  try {
+    const { username, result, attempts, points, achieved } = req.body;
+    if (!!username && !result) throw new Error("Data not provided...");
+
+    Results.create(
+      { username, result, attempts, points, achieved },
+      function (err, data) {
+        res.json({ msg: "Result saved successfully" });
+      }
+    );
+  } catch (error) {
+    res.json({ error });
+  }
 }
 
 // delete all result
 export async function dropResult(req, res) {
-  res.json("Result api delete request");
+  try {
+    await Results.deleteMany();
+    res.json({ msg: "Results deleted successfully!" });
+  } catch (error) {
+    res.json({ error });
+  }
 }
