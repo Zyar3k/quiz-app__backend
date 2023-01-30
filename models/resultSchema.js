@@ -5,7 +5,7 @@ const resultModel = new mongoose.Schema({
   result: { type: Array, default: [] },
   attempts: { type: Number, default: 0 },
   points: { type: Number, default: 0 },
-  achieved: { typ: String, default: "" },
+  achieved: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now },
 });
 
