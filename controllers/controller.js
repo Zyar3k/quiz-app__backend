@@ -1,6 +1,6 @@
 import Questions from "../models/questionSchema.js";
 import Results from "../models/resultSchema.js";
-import questions, { answers } from "../database/data.js";
+// import questions, { answers } from "../database/data.js";
 
 export async function getQuestions(req, res) {
   try {
